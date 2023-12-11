@@ -2,6 +2,13 @@
 
   tasks:
 
+    - name: update apt cache 
+      ansible.builtin.apt:
+        name: apt
+        update_cache: yes
+      become: yes
+      tags: cache
+
     - name: install make
       ansible.builtin.apt:
         name: make
@@ -31,15 +38,8 @@
       tags: installation  
 
     - name: add test user
-      user:
+      ansible.builtin.user:
         name: tirion
         append: yes
       become: yes  
       tags: manage_user
-
-    - name: update apt cache 
-      ansible.builtin.apt:
-        name: apt
-        update_cache: yes
-      become: yes
-      tags: cache  

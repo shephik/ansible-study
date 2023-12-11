@@ -25,3 +25,12 @@ endif
 	
 playbook-skip-tags:
 	ansible-playbook --check playbook.yml -i inventory.ini --skip-tags $(TAGS)
+
+
+playbook-nginx:
+ifdef TAGS
+	ansible-playbook playbook_nginx_html.yml -i inventory.ini -t $(TAGS)
+else
+	ansible-playbook playbook.yml -i inventory.ini
+endif
+	

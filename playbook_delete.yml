@@ -8,7 +8,7 @@
       become: yes  
 
     - name: delete test user
-      user:
+      ansible.builtin.user:
         name: tirion
         state: absent
         remove: yes
