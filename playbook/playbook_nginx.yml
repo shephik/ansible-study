@@ -15,7 +15,7 @@
 
     - name: copy nginx.conf file
       ansible.builtin.template:
-        src: files/nginx.conf
+        src: ../files/nginx.conf
         dest: /etc/nginx/nginx.conf
         follow: yes
       notify:
@@ -24,8 +24,8 @@
       tags: files  
 
     - name: copy index.html file
-      ansible.builtin.copy:
-        src: files/index.html
+      ansible.builtin.template:
+        src: ../files/index.html
         dest: "{{root_dir}}/index.html"
         follow: yes
       become: yes  

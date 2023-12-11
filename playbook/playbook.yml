@@ -1,5 +1,5 @@
 - hosts: servers
-
+  gather_facts: no
   tasks:
 
     - name: update apt cache 
@@ -21,7 +21,7 @@
         name: git
         state: present
       become: yes  
-      tags: installation
+      tags: git
 
     - name: install nodejs
       ansible.builtin.apt:
