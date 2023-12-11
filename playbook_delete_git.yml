@@ -1,0 +1,8 @@
+- hosts: servers
+
+  tasks:
+    - name: delete git
+      ansible.builtin.apt:
+        name: git
+        state: absent
+      become: yes  
