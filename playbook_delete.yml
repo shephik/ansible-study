@@ -6,3 +6,10 @@
         name: git
         state: absent
       become: yes  
+
+    - name: delete test user
+      user:
+        name: tirion
+        state: absent
+        remove: yes
+      become: yes  

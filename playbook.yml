@@ -1,9 +1,45 @@
 - hosts: servers
 
   tasks:
+
+    - name: install make
+      ansible.builtin.apt:
+        name: make
+        state: present
+      become: yes  
+      tags: installation
+
     - name: install git
       ansible.builtin.apt:
         name: git
         state: present
-        update_cache: yes
       become: yes  
+      tags: installation
+
+    - name: install nodejs
+      ansible.builtin.apt:
+        name: nodejs
+        state: present
+      become: yes  
+      tags: installation
+
+    - name: install npm
+      ansible.builtin.apt:
+        name: npm
+        state: present
+      become: yes  
+      tags: installation  
+
+    - name: add test user
+      user:
+        name: tirion
+        append: yes
+      become: yes  
+      tags: manage_user
+
+    - name: update apt cache 
+      ansible.builtin.apt:
+        name: apt
+        update_cache: yes
+      become: yes
+      tags: cache  
