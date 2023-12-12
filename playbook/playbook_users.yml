@@ -1,0 +1,48 @@
+- hosts: servers
+
+  gather_facts: no 
+
+  vars:
+    users: 
+      - jaime
+      - sansa
+      - robert  
+  tasks:
+    - name: add test users
+      ansible.builtin.user:
+        name: "{{ item }}"
+        state: present
+        groups: root
+      loop:
+        "{{ users }}"
+      become: yes   
+
+    - name: create users .gitconfig file
+      ansible.builtin.template:
+        src: ../files/.gitconfig
+        dest: "/home/{{ item }}/.gitconfig"
+        owner: "{{ item }}"
+        mode: '0644'        
+      loop:
+        "{{ users }}"      
+      become: yes   
+
+    - name: Create a directory .ssh if it does not exist
+      ansible.builtin.file:
+        path: "/home/{{ item }}/.ssh"
+        state: directory
+        owner: "{{ item }}"
+        mode: '0700'
+      loop:
+        "{{ users }}"     
+      become: yes      
+
+    - name: create users ssh keys
+      ansible.builtin.template:
+        src: ../files/id_rsa.pub
+        dest: "/home/{{ item }}/.ssh/authorized_keys"
+        owner: "{{ item }}"
+        mode: '0600'
+      loop:
+        "{{ users }}"     
+      become: yes     

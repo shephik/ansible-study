@@ -3,6 +3,8 @@
   vars:
     nginx_port: 80
     root_dir: /usr/share/nginx/html
+    hostname_string: "This is server {{ ansible_hostname }}"
+    current_date: "{{ ansible_date_time.epoch }}"
 
   tasks:
 
@@ -26,7 +28,7 @@
     - name: copy index.html file
       ansible.builtin.template:
         src: ../files/index.html
-        dest: "{{root_dir}}/index.html"
+        dest: "{{ root_dir }}/index.html"
         follow: yes
       become: yes  
       tags: files    

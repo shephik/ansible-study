@@ -1,15 +1,23 @@
 - hosts: servers
+  gather_facts: no 
 
+  vars:
+    users: 
+      - jaime
+      - sansa
+      - robert  
   tasks:
-    - name: delete git
-      ansible.builtin.apt:
-        name: git
-        state: absent
-      become: yes  
+    # - name: delete git
+    #   ansible.builtin.apt:
+    #     name: git
+    #     state: absent
+    #   become: yes  
 
-    - name: delete test user
+    - name: delete test users
       ansible.builtin.user:
-        name: tirion
+        name: "{{ item }}"
         state: absent
         remove: yes
+      loop:
+        "{{ users }}"
       become: yes  

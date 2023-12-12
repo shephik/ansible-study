@@ -8,7 +8,8 @@
 </head>
 <body>
   <h1>Hello World!!!</h1>
-  <h2>This is server {{ server_name }}!</h2>
+  <h2>{{ hostname_string | upper }}!</h2>
+  <small>Deployed at: {{ '%a, %d %b %Y %H:%M:%S' | strftime(current_date) }}</small>
   <h3>Build version: {{ version }}</h3>
 </body>
 </html>

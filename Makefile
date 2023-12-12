@@ -33,3 +33,11 @@ else
 	ansible-playbook playbook/playbook_nginx.yml -i inventory.ini
 endif
 	
+
+
+playbook-users:
+	ansible-playbook playbook/playbook_users.yml -i inventory.ini
+
+
+playbook-delete:
+	ansible-playbook playbook/playbook_delete.yml -i inventory.ini

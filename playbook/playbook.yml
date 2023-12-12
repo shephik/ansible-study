@@ -1,45 +1,49 @@
 - hosts: servers
-  gather_facts: no
+  # gather_facts: no
+
+  vars:
+    # packages:
+    #   - ansible
+    #   - make
+    #   - git
+    #   - nodejs
+    #   - npm
+    numbers: [6, 2, 1, 3, 2]
+
   tasks:
 
-    - name: update apt cache 
-      ansible.builtin.apt:
-        name: apt
-        update_cache: yes
-      become: yes
-      tags: cache
+    # - name: update apt cache 
+    #   ansible.builtin.apt:
+    #     name: apt
+    #     update_cache: yes
+    #   become: yes
+    #   tags: cache
 
-    - name: install make
-      ansible.builtin.apt:
-        name: make
-        state: present
-      become: yes  
-      tags: installation
+    # - name: install make
+    #   ansible.builtin.apt:
+    #     name: "{{ item }}"
+    #     state: present
+    #   loop:
+    #     "{{ packages }}"
+    #   become: yes  
+    #   tags: installation
 
-    - name: install git
-      ansible.builtin.apt:
-        name: git
-        state: present
-      become: yes  
-      tags: git
+    - name: test conditions
+      ansible.builtin.shell: echo "This is fine"
+      when: ansible_os_family != "Debian"
 
-    - name: install nodejs
-      ansible.builtin.apt:
-        name: nodejs
-        state: present
-      become: yes  
-      tags: installation
+    - name: test debug conditions 
+      ansible.builtin.debug: 
+        var: ansible_os_family == "Debian"  
 
-    - name: install npm
-      ansible.builtin.apt:
-        name: npm
-        state: present
-      become: yes  
-      tags: installation  
+    - name: test filter hash 
+      ansible.builtin.debug: msg={{ 'test' | hash('sha1') }}
 
-    - name: add test user
-      ansible.builtin.user:
-        name: tirion
-        append: yes
-      become: yes  
-      tags: manage_user
+    - name: test filter expanduser 
+      ansible.builtin.debug: msg={{ '~/1212' | expanduser }}
+
+    - name: test filter random 
+      ansible.builtin.debug: msg={{ ['1', '2', '3'] | random }}  
+
+    - name: test filter nums min/max 
+      ansible.builtin.debug: msg={{ numbers | max }}   
