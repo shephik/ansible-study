@@ -1,0 +1,29 @@
+- hosts: servers
+  gather_facts: no
+
+  vars:
+    packages:
+      - ansible
+      - make
+      - git
+      - nodejs
+      - npm
+      - cowsay
+
+  tasks:
+
+    - name: update apt cache 
+      ansible.builtin.apt:
+        name: apt
+        update_cache: yes
+      become: yes
+      tags: cache
+
+    - name: install packages
+      ansible.builtin.apt:
+        name: "{{ item }}"
+        state: latest
+      loop:
+        "{{ packages }}"
+      become: yes  
+      tags: installation

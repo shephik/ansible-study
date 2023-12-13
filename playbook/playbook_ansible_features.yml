@@ -1,0 +1,52 @@
+- hosts: servers
+
+  vars:
+    numbers: [6, 2, 1, 3, 2]
+
+  tasks:
+
+    - name: test conditions
+      ansible.builtin.shell: echo "This is fine"
+      when: ansible_os_family != "Debian"
+      tags: conditions
+
+    - name: test debug conditions 
+      ansible.builtin.debug: 
+        var: ansible_os_family == "Debian"  
+      tags: conditions  
+
+    - name: test filter hash 
+      ansible.builtin.debug: msg={{ 'test' | hash('sha1') }}
+      tags: filters
+
+    - name: test filter expanduser 
+      ansible.builtin.debug: msg={{ '~/1212' | expanduser }}
+      tags: filters
+
+    - name: test filter random 
+      ansible.builtin.debug: msg={{ ['1', '2', '3'] | random }}  
+      tags: filters
+
+    - name: test filter nums min/max 
+      ansible.builtin.debug: msg={{ numbers | max }}   
+      tags: filters
+
+    - ansible.builtin.command: 'false'
+      register: result
+      ignore_errors: yes
+      tags: result_register  
+    - ansible.builtin.command: echo 'ehu'
+      when: not result.failed
+      tags: result_register  
+    - ansible.builtin.command: uptime
+      when: result.failed  
+      tags: result_register  
+
+
+    - ansible.builtin.shell: ls /home/kate
+      register: home_dirs
+      tags: result_register  
+    - name: print home_dirs variable
+      ansible.builtin.debug:
+        var: home_dirs  
+      tags: result_register  
