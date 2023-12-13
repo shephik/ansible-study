@@ -7,9 +7,14 @@
   <title>Hello World!</title>
 </head>
 <body>
-  <h1>Hello World!!!</h1>
+  <h1>Hello World!</h1>
   <h2>{{ hostname_string | upper }}!</h2>
-  <small>Deployed at: {{ '%a, %d %b %Y %H:%M:%S' | strftime(current_date) }}</small>
-  <h3>Build version: {{ version }}</h3>
+  <pre>
+    <code>
+      {{ cowsay_result.stdout }}
+    </code>
+  </pre>
+  <p><small>Deployed at: {{ '%a, %d %b %Y %H:%M:%S' | strftime(current_date) }}</small></p> 
+  <p><small>Build version: {{ version }}</small></p>
 </body>
 </html>

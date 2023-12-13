@@ -8,6 +8,17 @@
 
   tasks:
 
+    - name: install cowsay
+      ansible.builtin.apt:
+        name: cowsay
+        state: latest
+      become: yes  
+      tags: installation
+
+    - name: get cowsay template 
+      ansible.builtin.shell: cowsay "This is server {{ ansible_hostname }}!"
+      register: cowsay_result  
+
     - name: install nginx
       ansible.builtin.apt:
         name: nginx
