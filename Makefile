@@ -39,6 +39,11 @@ playbook-users:
 playbook-delete:
 	ansible-playbook playbook/playbook_delete.yml -i inventory.ini
 
+playbook-delete-vault:
+	ansible-playbook playbook/playbook_delete.yml -i inventory.ini --ask-vault-pass
+
+playbook-delete-vault-pass:
+	ansible-playbook playbook/playbook_delete.yml -i inventory.ini --vault-password-file .vaultpass
 
 playbook:
 	ansible-playbook playbook/playbook.yml -i inventory.ini
