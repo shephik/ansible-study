@@ -3,15 +3,16 @@
 
   vars:
     users: 
-      - jaime
-      - sansa
-      - robert  
+      # - jaime
+      # - sansa
+      # - robert 
+      - testuser 
   tasks:
-    # - name: delete git
-    #   ansible.builtin.apt:
-    #     name: git
-    #     state: absent
-    #   become: yes  
+  #   - name: delete git
+  #     ansible.builtin.apt:
+  #       name: nodejs
+  #       state: absent
+  #     become: yes  
 
     - name: delete test users
       ansible.builtin.user:

@@ -1,0 +1,27 @@
+- hosts: all
+  gather_facts: no
+
+  pre_tasks:
+    - name: copy requirements.yml to server
+      ansible.builtin.template:
+        src: ../requirements.yml
+        dest: /home/kate/requirements.yml
+      become: yes  
+    - name: execute ansible install roles
+      ansible.builtin.shell: ansible-galaxy install -r requirements.yml
+
+  roles:
+    - name: geerlingguy.git
+      vars:
+        ansible_os_family: 'Debian'
+      become: yes  
+    - name: geerlingguy.nodejs
+      vars:
+        ansible_os_family: 'Debian'
+        ansible_distribution_release: 'jammy'
+      become: yes  
+        
+    - name: create-user 
+      vars: 
+        user: newuser
+      become: yes  

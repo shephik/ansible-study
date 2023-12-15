@@ -38,7 +38,7 @@
 
     - name: copy index.html file
       ansible.builtin.template:
-        src: ../files/index.html
+        src: ../files/index.html.j2
         dest: "{{ root_dir }}/index.html"
         follow: yes
       become: yes  

@@ -1,4 +1,4 @@
-- hosts: servers
+- hosts: all
 
   vars:
     numbers: [6, 2, 1, 3, 2]

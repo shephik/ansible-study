@@ -1,0 +1,14 @@
+---
+- name: add test user
+  ansible.builtin.user:
+    name: "{{ user }}"
+    state: present
+  become: yes   
+
+- name: create user .gitconfig file
+  ansible.builtin.template:
+    src: ../files/.gitconfig
+    dest: "/home/{{ user }}/.gitconfig"
+    owner: "{{ user }}"
+    mode: '0644'               
+  become: yes   

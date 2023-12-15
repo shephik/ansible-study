@@ -1,6 +1,9 @@
 ping:
 	ansible all -i inventory.ini -u kate -m ping
 
+setup:
+	ansible all -i inventory.ini -m setup
+
 TAGS ?=
 
 playbook-features-check:
@@ -41,3 +44,7 @@ playbook:
 	ansible-playbook playbook/playbook.yml -i inventory.ini
 
 .PHONY: playbook
+
+
+playbook-roles:
+	ansible-playbook playbook/playbook_roles.yml -i inventory.ini
