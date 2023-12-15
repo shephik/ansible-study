@@ -1,6 +1,9 @@
 - hosts: all
   gather_facts: no
 
+  vars:
+    new_user: newuser
+
   pre_tasks:
     - name: copy requirements.yml to server
       ansible.builtin.template:
@@ -23,5 +26,16 @@
         
     - name: create-user 
       vars: 
-        user: newuser
+        user: "{{ new_user }}"
       become: yes  
+
+  post_tasks:
+
+    - name: add SSH key
+      ansible.posix.authorized_key:
+        user: "{{ new_user }}"
+        state: present
+        key: "{{ lookup('file', '../files/id_rsa.pub') }}"
+        path: "/home/{{ new_user }}/.ssh/authorized_keys" 
+      become: yes   
+      

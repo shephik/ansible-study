@@ -6,7 +6,7 @@
       # - jaime
       # - sansa
       # - robert 
-      - testuser 
+      - myuser 
   tasks:
   #   - name: delete git
   #     ansible.builtin.apt:

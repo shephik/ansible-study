@@ -2,3 +2,7 @@ roles:
   # Install a role from Ansible Galaxy.
   - name: geerlingguy.git
   - name: geerlingguy.nodejs
+
+collections:
+  # Install a collection from Ansible Galaxy
+  - name: ansible.posix
