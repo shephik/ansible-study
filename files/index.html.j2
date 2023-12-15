@@ -14,7 +14,7 @@
       {{ cowsay_result.stdout }}
     </code>
   </pre>
-  <p><small>Deployed at: {{ '%a, %d %b %Y %H:%M:%S' | strftime(current_date) }}</small></p> 
+  <p><small>Deployed at: {{ '%d.%m.%Y %H:%M:%S' | strftime(current_date) }} ({{ local_date.stdout }})</small></p> 
   <p><small>Build version: {{ version }}</small></p>
 </body>
 </html>

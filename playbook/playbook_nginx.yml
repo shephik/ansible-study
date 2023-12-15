@@ -8,17 +8,6 @@
 
   tasks:
 
-    - name: install cowsay
-      ansible.builtin.apt:
-        name: cowsay
-        state: latest
-      become: yes  
-      tags: installation
-
-    - name: get cowsay template 
-      ansible.builtin.shell: cowsay "This is server {{ ansible_hostname }}!"
-      register: cowsay_result  
-
     - name: install nginx
       ansible.builtin.apt:
         name: nginx
@@ -26,6 +15,39 @@
       become: yes  
       tags: installation
 
+    - name: install cowsay
+      ansible.builtin.apt:
+        name: cowsay
+        state: latest
+      become: yes  
+      tags: installation  
+
+    - name: Ensure a RU locale exists
+      locale_gen:
+        name: ru_RU.UTF-8
+        state: present  
+      notify:
+        - restart nginx    
+      # sudo dpkg-reconfigure locales    
+
+    # - name: Set timezone to Europe/Moscow
+    #   timezone:
+    #     name: Europe/Moscow
+
+    - name: set locale
+      ansible.builtin.command: "date -d @{{ current_date }} '+%a, %d %B %Y %H:%M:%S'"
+      register: local_date  
+      # environment:
+      #   LANG: ru_RU.UTF-8
+      #   LC_ALL: ru_RU.UTF-8 
+
+    # - name: set locale 
+    #   ansible.builtin.command: date  "+%a, %d %B %Y %H:%M:%S"
+    #   register: locale_date
+    #   environment:
+    #     LANG: ru_RU.UTF-8
+    #     LC_ALL: ru_RU.UTF-8 
+      
     - name: copy nginx.conf file
       ansible.builtin.template:
         src: ../files/nginx.conf
@@ -35,6 +57,10 @@
         - restart nginx  
       become: yes  
       tags: files  
+
+    - name: get cowsay template 
+      ansible.builtin.shell: cowsay "This is server {{ ansible_hostname }}!"
+      register: cowsay_result    
 
     - name: copy index.html file
       ansible.builtin.template:
